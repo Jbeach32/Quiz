@@ -15,18 +15,13 @@
   </header>
   <h1>Quiz Questions</h1>
   <div id="question-container" style="display: none;">
-  <p>What does const mean</p>
+    <h2>Question</h2>
+  <p id="question-text"></p>
   <form id="multiple-choice">
-    <input type="radio" name="answer" value="A keyword that defines a variable or pointer as unchangeable" id="A keyword that defines a variable or pointer as unchangeable">
-    <label for="A keyword that defines a variable or pointer as unchangeable">A keyword that defines a variable or pointer as unchangeable</label><br>
-    <input type="radio" name="answer" value="A jquery selector" id="A jquery selector">
-    <label for="A jquery selector">A jquery selector</label><br>
-    <input type="radio" name="answer" value="A constant tag" id="A constant tag">
-    <label for="A constant tag">A constant tag</label><br>
-    <button type="submit">Submit</button>
   </form>
   <div id="result"></div>
   </div>
+  <button type="submit" id="submit-button" style="display: none;">Submit</button>
   <div id="container">
     <h2>Wins: <span class="win">0 </span> </h2>
     <h2>Losses: <span class="lose">0</span></h2>    
