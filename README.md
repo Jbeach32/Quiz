@@ -6,6 +6,12 @@ This webpage is designed to test your basic knowledge of programming trivia. By 
 
 ## Installation
 
+https://jbeach32.github.io/Quiz/
+
+## Usage
+
+To use this webpage click the start button and then click submit once you have answered your questions. Enter your initials after you have completed the game and see your score. 
+
 ![Quiz 1](./Screenshots/Quiz%201.png)
 ![Quiz 2](./Screenshots/Quiz%202.png)
 ![Quiz 3](./Screenshots/Quiz%203.png)
@@ -14,11 +20,6 @@ This webpage is designed to test your basic knowledge of programming trivia. By 
 ![Quiz 6](./Screenshots/Quiz%206.png)
 ![Quiz 7](./Screenshots/Quiz%207.png)
 ![Quiz 8](./Screenshots/Quiz%208.png)
-
-## Usage
-
-To use this webpage click the start button and then click submit once you have answered your questions. Enter your initials after you have completed the game and see your score. 
-
 
 ## Credits 
 
