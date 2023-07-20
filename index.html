@@ -10,18 +10,21 @@
 <body>
   <header id="header">
     <h1>Quiz</h1>
-    <button class="start-button">Start</button>
+    <button id="action-button" class="start-button">Start</button>
     <h2 id ="countdown">Are you ready?</h2>
   </header>
-  <h1>Quiz Questions</h1>
   <div id="question-container" style="display: none;">
     <h2>Question</h2>
   <p id="question-text"></p>
-  <form id="multiple-choice">
+  <form id="multiple-choice">   
   </form>
   <div id="result"></div>
   </div>
-  <button type="submit" id="submit-button" style="display: none;">Submit</button>
+  <div id="save-score-container" style="display: none;">
+    <label for="initials-input">Enter your initials</label>
+    <input type="text" id="initials-input"/>
+    <button type="button" id="save-score-button">Save Score</button>
+  </div>
   <div id="container">
     <h2>Wins: <span class="win">0 </span> </h2>
     <h2>Losses: <span class="lose">0</span></h2>    

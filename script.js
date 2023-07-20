@@ -35,15 +35,57 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let timePenalty = 120;
+let win = false;
+let numOfWins = 0;
+let numOfLosses = 0;
+let numOfCorrectAnswers= 0;
+numOfWins
 
 function init() {
     getWins();
     getlosses();
 }
 
-function winGame() {
-    
+let quizStarted = false;
+
+function handleActionClick() {
+    console.log("hits here")
+    if (!quizStarted) {
+        quizStarted = true;
+        countdown();
+        document.getElementById("action-button").textContent = "Submit";
+    } else {
+        handleFormSubmit();
+    }
 }
+
+document.getElementById("action-button").addEventListener("click", handleActionClick);
+
+function winGame() {
+    numOfWins++
+    numOfCorrectAnswers=0
+    console.log(numOfWins)
+    questionContainer.style.display = "none";
+    document.getElementById("save-score-container").style.display = "block";    
+}
+
+function saveScore(initials, score) {
+    const scores= JSON.parse(localStorage.getItem("scores")) || [];
+    scores.push({ initials, score});
+    localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+document.getElementById("save-score-button").addEventListener("click", function (){
+    const initials = document.getElementById("initials-input").value;
+    if (initials.trim() === "") {
+        alert("Please enter your initials.");
+        return;
+    }
+    saveScore(initials, timePenalty);
+currentQuestionIndex = 0;
+timePenalty = 120;
+countdown();
+})
 
 function countdown() {
     var timePenalty = 120;
@@ -54,8 +96,8 @@ function countdown() {
         if (timePenalty > 1) {
             timerEl.textContent = timePenalty + ' seconds remaining';
             if (win && timePenalty > 0) {
-                clearInterval(timeInterval);
-                winGame();
+               // clearInterval(timeInterval);
+                //winGame();
             }
         }
         else if (timePenalty === 1) {
@@ -65,12 +107,15 @@ function countdown() {
             timerEl.textContent = '';
             clearInterval(timeInterval);
             displayMessage();
+            if (timePenalty === 0) {
+                //winGame();
+            }
         }
     }, 1000);
     showQuestion();
 }
 
-function showQuestion() {
+function showQuestion() { 
     if (currentQuestionIndex < questions.length) {
         questionContainer.style.display = "block";
         const currentQuestion = questions[currentQuestionIndex];
@@ -88,37 +133,61 @@ function showQuestion() {
             optionsForm.appendChild(label);
             optionsForm.appendChild(document.createElement("br"));
         });
-        currentQuestionIndex++;
-        document.getElementById("submit-button").style.display = "block";
+        document.getElementById("action-button").style.display = "block";
     } else {
-        document.getElementById("submit-button").style.display = "none";
-        winGame();
+        document.getElementById("action-button").style.display = "none";
+        document.getElementById("countdown").style.display = "none";
+        
     }
+    resultElement.textContent = "";
 }
 
 function handleFormSubmit(event) {
-    event.preventDefault();
     const selectedAnswer= document.querySelector('input[name="answer"]:checked');
+    const numOfAnswersToWin = 3;
     if (!selectedAnswer) {
         alert("Please select an answer.");
         return;
     }
     const userAnswer = selectedAnswer.value;
-    const correctAnswer = questions[currentQuestionIndex - 1].correctAnswer;
+    const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+    console.log(userAnswer)
+    console.log(correctAnswer)
     const resultElement = document.getElementById("result");
+    console.log(userAnswer === correctAnswer)
     if (userAnswer === correctAnswer) {
+        numOfCorrectAnswers++
         resultElement.textContent = "Correct!";
+        console.log(numOfCorrectAnswers)
+        console.log(numOfCorrectAnswers)
+        if (numOfAnswersToWin === numOfCorrectAnswers) {
+            console.log("You Won")
+            winGame()
+        }
     }
     else {
+        numOfLosses++
         resultElement.textContent = "Incorrect.";
         timePenalty -= 10;
         if (timePenalty < 0) {
             timePenalty = 0;
         }
     }
-    setTimeout(showQuestion, 1000);
+    currentQuestionIndex++;
+    showQuestion();
+}
+
+function playAgain() {
+    quizStarted = false;
+    currentQuestionIndex = 0;
+    timePenalty = 120;
+    win = false;
+    document.getElementById("action-button").textContent = "Start";
+    document.getElementById("save-score-container").style.display = "none";
+    questionContainer.style.display = "none";
+    document.getElementById("countdown").textContent = "Are you ready?";
 }
 
 const quizForm = document.getElementById("multiple-choice");
 quizForm.addEventListener("submit", handleFormSubmit);
-startButton.addEventListener("click", countdown);
+startButton.addEventListener("click", showQuestion);
