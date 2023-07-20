@@ -26,10 +26,14 @@
     <button type="button" id="save-score-button">Save Score</button>
   </div>
   <div id="container">
-    <h2>Wins: <span class="win">0 </span> </h2>
-    <h2>Losses: <span class="lose">0</span></h2>    
+    <h2>Wins: <span id="wins-count" class="win">0 </span> </h2>
+    <h2>Losses: <span id="losses-count" class="lose">0</span></h2> 
+    <p>Your Initials: <span id="initials-display"></span></p>   
     <p id="main"></p>
     
+  </div>
+  <div id="replay-container" style="display: none;">
+    <button id="replay-button" onclick="playAgain()">Play Again</button>
   </div>
 
   <script src="./script.js"></script>

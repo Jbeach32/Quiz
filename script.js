@@ -42,8 +42,8 @@ let numOfCorrectAnswers= 0;
 numOfWins
 
 function init() {
-    getWins();
-    getlosses();
+    //getWins();
+    //getlosses();
 }
 
 let quizStarted = false;
@@ -65,14 +65,20 @@ function winGame() {
     numOfWins++
     numOfCorrectAnswers=0
     console.log(numOfWins)
+    document.getElementById("wins-count").textContent = numOfWins;
+    initials = document.getElementById("initials-input").value;
+    document.getElementById("initials-input").textContent = initials;
+    document.getElementById("save-score-container").style.display = "none";
     questionContainer.style.display = "none";
-    document.getElementById("save-score-container").style.display = "block";    
+    document.getElementById("countdown").style.display = "none"; 
+    document.getElementById("replay-container").style.display = "block";   
 }
 
 function saveScore(initials, score) {
     const scores= JSON.parse(localStorage.getItem("scores")) || [];
     scores.push({ initials, score});
     localStorage.setItem("scores", JSON.stringify(scores));
+    document.getElementById("initials-display").textContent = initials;
 }
 
 document.getElementById("save-score-button").addEventListener("click", function (){
@@ -172,6 +178,7 @@ function handleFormSubmit(event) {
         if (timePenalty < 0) {
             timePenalty = 0;
         }
+        document.getElementById("losses-count").textContent = numOfLosses;
     }
     currentQuestionIndex++;
     showQuestion();
@@ -183,11 +190,24 @@ function playAgain() {
     timePenalty = 120;
     win = false;
     document.getElementById("action-button").textContent = "Start";
-    document.getElementById("save-score-container").style.display = "none";
+    document.getElementById("save-score-container").style.display = "block";
     questionContainer.style.display = "none";
     document.getElementById("countdown").textContent = "Are you ready?";
+    document.getElementById("replay-container").style.display = "none";
+    document.getElementById("result").textContent = "";
+    document.getElementById("multiple-choice").innerHTML = "";
 }
 
 const quizForm = document.getElementById("multiple-choice");
 quizForm.addEventListener("submit", handleFormSubmit);
 startButton.addEventListener("click", showQuestion);
+
+document.getElementById("save-score-button").addEventListener("click", function () {
+    //const initials = document.getElementById("initials-input").value;
+    if (initials.trim() === "") {
+        alert("Please enter your initials.");
+        return;
+    }
+    saveScore(initials, numOfWins, numOfLosses);
+    playAgain();
+});
